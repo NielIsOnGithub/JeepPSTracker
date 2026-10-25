@@ -1,6 +1,8 @@
 from fastapi import FastAPI, Request
 from script.database import GPSDatabase
 
+VALID_DEVICE_TYPES = ["phone", "esp32"]
+
 class App:
     def __init__(self, database: GPSDatabase) -> None:
         self.fast_api = FastAPI()
@@ -17,6 +19,12 @@ class App:
 
         try:
             device_id, device_type, latitude, longitude = data
+
+            if device_type not in VALID_DEVICE_TYPES:
+                raise ValueError(f"Device type {device_type} is invalid.")
+
+            if not (isinstance(latitude, float) and isinstance(longitude, float)):
+                raise TypeError(f"Latitude's ({latitude}) or Longitude's ({longitude}) value type is incorrect.")
 
             self.database.update(device_id, device_type, latitude, longitude)
                 

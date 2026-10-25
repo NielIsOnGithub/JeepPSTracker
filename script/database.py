@@ -1,7 +1,7 @@
 import sqlite3
 
 class GPSDatabase:
-    def __init__(self, db_name: str = "jeeps") -> None:
+    def __init__(self, db_name) -> None:
         self.database_name = db_name
 
         self.connection = sqlite3.connect(db_name + ".db")

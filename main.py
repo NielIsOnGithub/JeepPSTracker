@@ -7,7 +7,7 @@ from script.app import App
 
 NGROK_AUTH_PATH = "ngrok-auth.txt"
 
-database = GPSDatabase()
+database = GPSDatabase("gps")
 app = App(database)
 
 if __name__ == "__main__":
@@ -37,3 +37,5 @@ if __name__ == "__main__":
         if public_url and public_url.public_url:
             ngrok.disconnect(public_url.public_url)
             ngrok.kill()
+
+        database.close()
